@@ -1,0 +1,5 @@
+output/*
+docs-saferwall-pod.yaml
+
+src/*
+!src/.gitkeep

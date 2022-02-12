@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: saferwall-webapis-pod
+  name: saferwall-webapis-pod
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: localhost/default.json
+spec:
+  restartPolicy: OnFailure
+  hostNetwork: true
+  containers:
+  - name: srv01
+    image: docker.io/saferwall/webapis
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      capabilities:
+        add: []
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      seLinuxOptions:
+        type: saferwall_webapis.process
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 1000m
+      limits:
+        memory: 500Mi
+        cpu: 1000m
+    env:
+    - name: SFW_WEBAPIS_DEPLOYMENT_KIND
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-webapis-configmap
+          key: SFW_WEBAPIS_DEPLOYMENT_KIND
+    volumeMounts:
+    - mountPath: /saferwall/conf/local.toml
+      name: saferwall-webapis-config
+      readOnly: true
+  volumes:
+  - name: saferwall-webapis-config
+    hostPath:
+      path: ./configs/local.toml

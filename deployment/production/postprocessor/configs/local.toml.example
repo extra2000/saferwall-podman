@@ -1,0 +1,31 @@
+# Log level verbosity.
+log_level = "debug"
+# Address ofthe server that host the machine learning pipeline.
+ml_address = "http://127.0.0.1:8888"
+
+[producer]
+# The data source name (DSN) for connecting to the broker server (NSQD)
+nsqd = "127.0.0.1:4150"
+# Topic name to produce to.
+topic = "topic-aggregator"
+
+[consumer]
+# The data source name (DSN) for connecting to the service discovery server
+# (NSQLookupD).
+lookupds = ["127.0.0.1:4161"]
+# Topic name to consume from.
+topic = "topic-postprocessor"
+# Channel name used in conjunction with topic name.
+channel = "chan-postprocessor"
+# The number of concurrent workers to process the jobs.
+concurrency = 1
+
+[db]
+# DSN for connecting to the database.
+server = "couchbase://127.0.0.1"
+# Username used to access the db.
+username = "saferwall-system"
+# Password used to access the db.
+password = "abcde12345"
+# Name of the couchbase bucket.
+bucket_name = "sfw"

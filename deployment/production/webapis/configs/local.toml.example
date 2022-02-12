@@ -1,0 +1,47 @@
+address = "127.0.0.1:8000" # The IP:Port. Defaults to 8000.
+debug = true # Debug mode.
+log_level = "debug" # Log level. Defaults to info.
+jwt_signkey = "secret" # JWT sign key secret.
+jwt_expiration = 72 # JWT expiration in hours. Defaults to 72 hours (3 days).
+reset_pwd_token_expiration = 10 # represents the token expiration for reset password and email confirmation requests in minutes.
+max_file_size = 64 # Maximum file size to allow for samples in MB.
+max_avatar_file_size = 1 # Maximum avatar size to allow for user profile picture in KB.
+
+[ui]
+address = "http://127.0.0.1:8080" # DSN for the frontend.
+
+[db]
+server = "couchbase://127.0.0.1" # DSN for connecting to the database
+username = "saferwall-system"
+password = "abcde12345"
+bucket_name = "sfw" # Name of the couchbase bucket.
+
+[nsq]
+address = "127.0.0.1:4150" # The data source name (DSN) for connecting to the broker server (NSQD).
+topic = "topic-filescan" # Topic name to produce to.
+
+[storage]
+deployment_kind = "minio" # Deployement kind, possible values: aws, minio, local.
+files_container_name = "saferwall-samples" # Container name for samples.
+avatars_container_name = "saferwall-images" # Container name for avatars.
+    # Only one storage type has to be provided. `deployment_kind` controls
+    # at runtime which one to use.
+    [storage.s3]
+    region = "us-east-1" # AWS region.
+    access_key = "AwsAccessKey" # AWS Secret Access Key.
+    secret_key = "AwsSecretKey" # AWS Access key ID.
+    [storage.minio]
+    endpoint = "127.0.0.1:9000" # MinIO endpoint.
+    region = "us-east-1" # Region.
+    access_key = "minio" # Access key ID.
+    secret_key = "minio123" # Secret Access Key.
+    [storage.local]
+    root_dir = "/saferwall" # Full path to the directory where to store the files.
+
+[smtp]
+server = "smtp.example.com"
+port = 465
+user = "user@example.com"
+password = "password"
+identity = "identity"
+sender = "sender@example.com"

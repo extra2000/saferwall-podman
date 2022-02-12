@@ -1,0 +1,5 @@
+(block saferwall_postprocessor
+    (blockinherit container)
+    (allow process unreserved_port_t ( tcp_socket ( name_connect )))
+    (allow process soundd_port_t ( tcp_socket ( name_connect )))
+)

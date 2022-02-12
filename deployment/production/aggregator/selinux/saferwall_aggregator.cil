@@ -1,0 +1,4 @@
+(block saferwall_aggregator
+    (blockinherit container)
+    (allow process unreserved_port_t ( tcp_socket ( name_connect )))
+)

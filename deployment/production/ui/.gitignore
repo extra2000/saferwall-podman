@@ -1,0 +1,7 @@
+configmaps/*
+!configmaps/*.example
+
+secrets/*
+!secrets/.gitkeep
+
+saferwall-ui-pod.yaml

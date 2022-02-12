@@ -1,0 +1,7 @@
+configmaps/*
+!configmaps/*.example
+
+configs/*
+!configs/*.example
+
+saferwall-pe-pod.yaml

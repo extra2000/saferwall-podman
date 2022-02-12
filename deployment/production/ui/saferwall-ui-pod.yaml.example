@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: saferwall-ui-pod
+  name: saferwall-ui-pod
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: localhost/default.json
+spec:
+  restartPolicy: OnFailure
+  hostNetwork: true
+  containers:
+  - name: srv01
+    image: localhost/saferwall/ui
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      capabilities:
+        add: []
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      seLinuxOptions:
+        type: saferwall_ui.process
+    resources:
+      requests:
+        memory: 1000Mi
+        cpu: 1000m
+      limits:
+        memory: 1000Mi
+        cpu: 1000m
+    env:
+    - name: VUE_APP_ANALYTICS_GOOGLE_TAG
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-ui-configmap
+          key: VUE_APP_ANALYTICS_GOOGLE_TAG
+    - name: VUE_APP_BASE_URI
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-ui-configmap
+          key: VUE_APP_BASE_URI
+    - name: VUE_APP_API_BASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-ui-configmap
+          key: VUE_APP_API_BASE_URL
+    - name: VUE_APP_AVATAR_BASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-ui-configmap
+          key: VUE_APP_AVATAR_BASE_URL
+    - name: NGINX_HTTP_PORT
+      valueFrom:
+        configMapKeyRef:
+          name: saferwall-ui-configmap
+          key: NGINX_HTTP_PORT

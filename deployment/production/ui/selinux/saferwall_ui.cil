@@ -1,0 +1,7 @@
+(block saferwall_ui
+    (blockinherit container)
+    (allow process http_cache_port_t ( tcp_socket ( name_bind )))
+    (allow process node_t ( tcp_socket ( node_bind )))
+    (allow process proc_t ( filesystem ( associate )))
+    (allow process self ( tcp_socket ( listen )))
+)
